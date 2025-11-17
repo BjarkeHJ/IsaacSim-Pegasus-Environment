@@ -6,6 +6,7 @@
 
 ## IsaacSim Installation
 ```bash
+# Go to home directory 
 cd ~
 
 # Create new directory for the IsaacSim installation
@@ -28,9 +29,12 @@ rm isaac-sim-standalone-5.1.0-linux-x86_64.zip
 
 ## PegasusSim Installation
 
+
+
 ## World Configuration
 
 ## Quick Launch
+
 
 
 
