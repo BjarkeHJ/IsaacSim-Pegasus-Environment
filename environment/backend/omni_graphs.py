@@ -19,18 +19,18 @@ class OmniGraphs:
         {"graph_path": "/Graphs/ROS_Camera", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("ros2_context", "omni.isaac.ros2_bridge.ROS2Context"),
-                ("on_playback_tick", "omni.graph.action.OnPlaybackTick"),
-                ("isaac_run_one_simulation_frame","omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
-                ("isaac_create_render_product","omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("camera_publish_image","omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("camera_publish_depth","omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("ros2_camera_info_helper","omni.isaac.ros2_bridge.ROS2CameraInfoHelper"),
-                ("ros2_qos_profile", "omni.isaac.ros2_bridge.ROS2QoSProfile"),
+                ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                ("on_tick", "omni.graph.action.OnTick"),
+                ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+                ("isaac_create_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                ("camera_publish_image","isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("camera_publish_depth","isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("ros2_camera_info_helper","isaacsim.ros2.bridge.ROS2CameraInfoHelper"),
+                ("ros2_qos_profile", "isaacsim.ros2.bridge.ROS2QoSProfile"),
             ],
             og.Controller.Keys.CONNECT: [
                 # isaac_run_one_simulation_frame inputs
-                ("on_playback_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
+                ("on_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
                 # isaac_create_render_product inputs
                 ("isaac_run_one_simulation_frame.outputs:step", "isaac_create_render_product.inputs:execIn"),
                 # camera_publish_image inputs
@@ -75,23 +75,23 @@ class OmniGraphs:
         {"graph_path": f"{prim_path}/ros_stereo_camera", "evaluator_name": "execution"},
         {
             og.Controller.Keys.CREATE_NODES: [
-                ("ros2_context", "omni.isaac.ros2_bridge.ROS2Context"),
-                ("on_playback_tick", "omni.graph.action.OnPlaybackTick"),
-                ("isaac_run_one_simulation_frame","omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
-                ("left_camera_render_product","omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("left_camera_publish_image","omni.isaac.ros2_bridge.ROS2CameraHelper"),
+                ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                ("on_tick", "omni.graph.action.OnTick"),
+                ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+                ("left_camera_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                ("left_camera_publish_image","isaacsim.ros2.bridge.ROS2CameraHelper"),
                 ("left_camera_frame_id","omni.graph.nodes.ConstantString"),
-                ("left_camera_publish_depth","omni.isaac.ros2_bridge.ROS2CameraHelper"),
-                ("right_camera_render_product","omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                ("right_camera_publish_image","omni.isaac.ros2_bridge.ROS2CameraHelper"),
+                ("left_camera_publish_depth","isaacsim.ros2.bridge.ROS2CameraHelper"),
+                ("right_camera_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                ("right_camera_publish_image","isaacsim.ros2.bridge.ROS2CameraHelper"),
                 ("right_camera_frame_id","omni.graph.nodes.ConstantString"),
-                ("ros2_camera_info_helper","omni.isaac.ros2_bridge.ROS2CameraInfoHelper"),
-                ("ros2_qos_profile", "omni.isaac.ros2_bridge.ROS2QoSProfile"),
+                ("ros2_camera_info_helper","isaacsim.ros2.bridge.ROS2CameraInfoHelper"),
+                ("ros2_qos_profile", "isaacsim.ros2.bridge.ROS2QoSProfile"),
                 ("camera_namespace", "omni.graph.nodes.ConstantString"),
             ],
             og.Controller.Keys.CONNECT: [
                 # isaac_run_one_simulation_frame inputs
-                ("on_playback_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
+                ("on_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
                 # left_camera_render_product inputs
                 ("isaac_run_one_simulation_frame.outputs:step", "left_camera_render_product.inputs:execIn"),
                 # right_camera_render_product inputs
@@ -166,17 +166,17 @@ class OmniGraphs:
             {"graph_path": f"{prim_path}/ros_lidar", "evaluator_name": "execution"},
             {
                 og.Controller.Keys.CREATE_NODES: [
-                    ("ros2_context", "omni.isaac.ros2_bridge.ROS2Context"),
-                    ("on_playback_tick", "omni.graph.action.OnPlaybackTick"),
-                    ("isaac_run_one_simulation_frame","omni.isaac.core_nodes.OgnIsaacRunOneSimulationFrame"),
-                    ("isaac_create_render_product","omni.isaac.core_nodes.IsaacCreateRenderProduct"),
-                    ("ros2_qos_profile", "omni.isaac.ros2_bridge.ROS2QoSProfile"),
-                    ("rtx_lidar", "omni.isaac.ros2_bridge.ROS2RtxLidarHelper"),
+                    ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                    ("on_tick", "omni.graph.action.OnTick"),
+                    ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
+                    ("isaac_create_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
+                    ("ros2_qos_profile", "isaacsim.ros2.bridge.ROS2QoSProfile"),
+                    ("rtx_lidar", "isaacsim.ros2.bridge.ROS2RtxLidarHelper"),
                     ("lidar_namespace", "omni.graph.nodes.ConstantString"),
                 ],
                 og.Controller.Keys.CONNECT: [
                     # isaac_run_one_simulation_frame inputs
-                    ("on_playback_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
+                    ("on_tick.outputs:tick", "isaac_run_one_simulation_frame.inputs:execIn"),
                     # isaac_create_render_product inputs
                     ("isaac_run_one_simulation_frame.outputs:step", "isaac_create_render_product.inputs:execIn"),
                     # rtx_lidar inputs
@@ -206,33 +206,33 @@ class OmniGraphs:
             {"graph_path": f"{prim_path}/transform_tree_odometry", "evaluator_name": "execution"},
             {
                 og.Controller.Keys.CREATE_NODES: [
-                    ("ros2_context", "omni.isaac.ros2_bridge.ROS2Context"),
-                    ("on_playback_tick", "omni.graph.action.OnPlaybackTick"),
-                    ("ros2_qos_profile", "omni.isaac.ros2_bridge.ROS2QoSProfile"),
-                    ("isaac_read_simulation_time", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                    ("tf_tree_base_link_to_sensors", "omni.isaac.ros2_bridge.ROS2PublishTransformTree"),
-                    ("tf_tree_base_link_to_body", "omni.isaac.ros2_bridge.ROS2PublishTransformTree"),
-                    ("isaac_compute_odometry_node", "omni.isaac.core_nodes.IsaacComputeOdometry"),
-                    ("ros2_publish_odometry", "omni.isaac.ros2_bridge.ROS2PublishOdometry"),
-                    ("ros2_publish_raw_transform_tree", "omni.isaac.ros2_bridge.ROS2PublishRawTransformTree"),
+                    ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                    ("on_tick", "omni.graph.action.OnTick"),
+                    ("ros2_qos_profile", "isaacsim.ros2.bridge.ROS2QoSProfile"),
+                    ("isaac_read_simulation_time", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                    ("tf_tree_base_link_to_sensors", "isaacsim.ros2.bridge.ROS2PublishTransformTree"),
+                    ("tf_tree_base_link_to_body", "isaacsim.ros2.bridge.ROS2PublishTransformTree"),
+                    ("isaac_compute_odometry_node", "isaacsim.core.nodes.IsaacComputeOdometry"),
+                    ("ros2_publish_odometry", "isaacsim.ros2.bridge.ROS2PublishOdometry"),
+                    ("ros2_publish_raw_transform_tree", "isaacsim.ros2.bridge.ROS2PublishRawTransformTree"),
                     ("tf_namespace", "omni.graph.nodes.ConstantString"),
                 ],
                 og.Controller.Keys.CONNECT: [
                     # tf_tree_base_link_to_sensors inputs
-                    ("on_playback_tick.outputs:tick", "tf_tree_base_link_to_sensors.inputs:execIn"),
+                    ("on_tick.outputs:tick", "tf_tree_base_link_to_sensors.inputs:execIn"),
                     ("ros2_context.outputs:context", "tf_tree_base_link_to_sensors.inputs:context"),
                     ("isaac_read_simulation_time.outputs:simulationTime", "tf_tree_base_link_to_sensors.inputs:timeStamp"),
                     ("ros2_qos_profile.outputs:qosProfile", "tf_tree_base_link_to_sensors.inputs:qosProfile"),
                     # tf_tree_base_link_to_body inputs
-                    ("on_playback_tick.outputs:tick", "tf_tree_base_link_to_body.inputs:execIn"),
+                    ("on_tick.outputs:tick", "tf_tree_base_link_to_body.inputs:execIn"),
                     ("ros2_context.outputs:context", "tf_tree_base_link_to_body.inputs:context"),
                     ("isaac_read_simulation_time.outputs:simulationTime", "tf_tree_base_link_to_body.inputs:timeStamp"),
                     ("ros2_qos_profile.outputs:qosProfile", "tf_tree_base_link_to_body.inputs:qosProfile"),
                     # isaac_compute_odometry_node inputs
-                    ("on_playback_tick.outputs:tick", "isaac_compute_odometry_node.inputs:execIn"),
+                    ("on_tick.outputs:tick", "isaac_compute_odometry_node.inputs:execIn"),
                     # ros2_publish_odometry inputs
                     ("tf_namespace.inputs:value", "ros2_publish_odometry.inputs:nodeNamespace"),
-                    ("on_playback_tick.outputs:tick", "ros2_publish_odometry.inputs:execIn"),
+                    ("on_tick.outputs:tick", "ros2_publish_odometry.inputs:execIn"),
                     ("ros2_context.outputs:context", "ros2_publish_odometry.inputs:context"),
                     ("ros2_qos_profile.outputs:qosProfile", "ros2_publish_odometry.inputs:qosProfile"),
                     ("isaac_read_simulation_time.outputs:simulationTime", "ros2_publish_odometry.inputs:timeStamp"),
@@ -241,7 +241,7 @@ class OmniGraphs:
                     ("isaac_compute_odometry_node.outputs:orientation", "ros2_publish_odometry.inputs:orientation"),
                     ("isaac_compute_odometry_node.outputs:position", "ros2_publish_odometry.inputs:position"),
                     # ros2_publish_raw_transform_tree inputs
-                    ("on_playback_tick.outputs:tick", "ros2_publish_raw_transform_tree.inputs:execIn"),
+                    ("on_tick.outputs:tick", "ros2_publish_raw_transform_tree.inputs:execIn"),
                     ("ros2_context.outputs:context", "ros2_publish_raw_transform_tree.inputs:context"),
                     ("isaac_read_simulation_time.outputs:simulationTime", "ros2_publish_raw_transform_tree.inputs:timeStamp"),
                     ("ros2_qos_profile.outputs:qosProfile", "ros2_publish_raw_transform_tree.inputs:qosProfile"),
@@ -273,16 +273,16 @@ class OmniGraphs:
             {"graph_path": "/ros_clock", "evaluator_name": "execution"},
             {
                 og.Controller.Keys.CREATE_NODES: [
-                    ("ros2_context", "omni.isaac.ros2_bridge.ROS2Context"),
-                    ("isaac_read_simulation_time", "omni.isaac.core_nodes.IsaacReadSimulationTime"),
-                    ("on_playback_tick", "omni.graph.action.OnPlaybackTick"),
-                    ("ros2_publish_clock", "omni.isaac.ros2_bridge.ROS2PublishClock"),
+                    ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                    ("isaac_read_simulation_time", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                    ("on_tick", "omni.graph.action.OnTick"),
+                    ("ros2_publish_clock", "isaacsim.ros2.bridge.ROS2PublishClock"),
                 ],
                 og.Controller.Keys.CONNECT: [
                     # ros2_publish_clock inputs
                     ("ros2_context.outputs:context", "ros2_publish_clock.inputs:context"),
                     ("isaac_read_simulation_time.outputs:simulationTime","ros2_publish_clock.inputs:timeStamp"),
-                    ("on_playback_tick.outputs:tick", "ros2_publish_clock.inputs:execIn"),
+                    ("on_tick.outputs:tick", "ros2_publish_clock.inputs:execIn"),
                 ],
                 og.Controller.Keys.SET_VALUES: [
                     # ros2_publish_clock inputs
