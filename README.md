@@ -5,10 +5,14 @@
 - ROS2 Humble Compatible
 
 ## IsaacSim Installation
+```bash
+cd ~
+```
 
 ## PegasusSim Installation
 
 ## World Configuration
 
 ## Quick Launch
+
 
