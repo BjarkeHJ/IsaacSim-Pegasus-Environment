@@ -2,32 +2,34 @@
 
 import carb
 from isaacsim import SimulationApp
-
-sim_app = SimulationApp({"headless": False})
-
-from pxr import Gf, UsdLux, Sdf
+sim_app = SimulationApp({"headless": False}) # MUST BE RIGHT AFTER SimulationApp IMPORT
 
 import os
 import yaml
-import omni
 import numpy as np
-import omni.isaac.core.utils.numpy.rotations as rot_utils
-from omni.isaac.core import World
-from omni.isaac.core.utils.stage import add_reference_to_stage
-from omni.isaac.core.prims import XFormPrim
-from omni.isaac.core.utils.extensions import enable_extension
 from scipy.spatial.transform import Rotation
+
+import omni.timeline
+from omni.isaac.core.world import World
+
+from isaacsim.core.utils.extensions import enable_extension
+enable_extension("isaacsim.ros2.bridge")
+
+# import omni.isaac.core.utils.numpy.rotations as rot_utils
+import isaacsim.core.utils.numpy.rotations as rot_utils
+from isaacsim.core.utils.stage import add_reference_to_stage
+from isaacsim.core.prims import XFormPrim
 
 # Import PegasusSim API
 from pegasus.simulator.params import ROBOTS
 from pegasus.simulator.logic.backends.px4_mavlink_backend import PX4MavlinkBackend, PX4MavlinkBackendConfig
 from pegasus.simulator.logic.vehicles.multirotor import Multirotor, MultirotorConfig
 from pegasus.simulator.logic.interface.pegasus_interface import PegasusInterface
+from pxr import Gf, UsdLux, Sdf
+
 
 from backend.sensor import StereoCamera, RTXLidar
 from backend.ros2 import ClockPublisher, TfPublisher
-
-enable_extension("omni.isaac.ros2_bridge")
 
 sim_app.update()
 
@@ -49,34 +51,39 @@ class PegasusApp:
     def setup_scene(self):
         self.world.scene.add_default_ground_plane()
         ClockPublisher()
-        self._spawn_ground_plane(scale=[100, 100, 100])
+        # self._spawn_ground_plane(scale=np.array([100, 100, 100]))
+        self._spawn_ground_plane(scale=None)
         self._spawn_light()
-        self._spawn_object(position=[10, 0, 0], filename="cube.usdc")
+        self._spawn_object(position=np.array([10, 0, 0]), filename="cube.usdc")
         self._spawn_quadrotor(position=[0,0,0], rotation=[0,0,0], vehicle_id=0)
         
 
     @staticmethod
-    def _spawn_ground_plane(scale=[1000, 1000, 1000]):
-        XFormPrim(prim_path="/World/defaultGroundPlane", scale=scale)
+    def _spawn_ground_plane(scale=None):
+        XFormPrim(prim_paths_expr="/World/defaultGroundPlane", scales=scale)
         return
         
     def _spawn_light(self):
         light = UsdLux.SphereLight.Define(self.world.stage, Sdf.Path("/World/light"))
         light.CreateRadiusAttr(50.0)
         light.CreateIntensityAttr(1000.0)
-        light.AddTranslateOp().Set(Gf.Vec3f(1000.0, 1000.0, 1000.0))
+        light.AddTranslateOp().Set(Gf.Vec3d(1000.0, 1000.0, 1000.0))
         return
 
-    def _spawn_object(self, position=[0.0, 0.0, 0.0], filename="cube.usdc"):
+    def _spawn_object(self, position=np.array([0.0, 0.0, 0.0]), filename="cube.usdc"):
         # file w. filename must be put in data folder and be .usdc 
         data_dir = os.path.join(self.working_dir, "data/")
         object_path = data_dir + filename
         add_reference_to_stage(usd_path=object_path, prim_path="/World/Object")
+        print("hello")
         XFormPrim(
-            prim_path = "/World/Object",
-            position=position,
-            scale=[1.0, 1.0, 1.0],
-            orientation=rot_utils.euler_angles_to_quats(np.array([0.0, 0.0, 0.0]), degrees=True),
+            prim_paths_expr = "/World/Object",
+            name = "CubeObject",
+            # positions=position,
+            # scales=np.array([1.0, 1.0, 1.0]),
+            # scales=None,
+            # orientations=rot_utils.euler_angles_to_quats(np.array([0.0, 0.0, 0.0]), degrees=True),
+            # orientations=None,
         )
         return
     
