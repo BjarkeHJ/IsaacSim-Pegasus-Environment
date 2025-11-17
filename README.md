@@ -7,6 +7,23 @@
 ## IsaacSim Installation
 ```bash
 cd ~
+
+# Create new directory for the IsaacSim installation
+mkdir -p isaacsim
+cd isaacsim
+
+# Download the zip file containing the IsaacSim installation
+wget https://download.isaacsim.omniverse.nvidia.com/isaac-sim-standalone-5.1.0-linux-x86_64.zip
+
+# Unzip the file
+unzip isaac-sim-standalone-5.1.0-linux-x86_64.zip
+
+# Run the post-installation scripts
+./post_install.sh
+./isaac-sim.selector.sh
+
+# Delete the zip file
+rm isaac-sim-standalone-5.1.0-linux-x86_64.zip
 ```
 
 ## PegasusSim Installation
@@ -14,5 +31,6 @@ cd ~
 ## World Configuration
 
 ## Quick Launch
+
 
 
