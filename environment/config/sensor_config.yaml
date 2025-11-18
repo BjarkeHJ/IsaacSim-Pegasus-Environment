@@ -11,4 +11,5 @@ stereo_camera:
     far: 100000
 
 rtx_lidar:
-  config_file: "OS1_REV7_128ch10hz2048res"
+  # config_file: "OS1_REV7_128ch10hz2048res"
+  config_file: "Example_Rotary"

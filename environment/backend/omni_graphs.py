@@ -20,6 +20,7 @@ class OmniGraphs:
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                # ("on_tick", "omni.graph.action.OnPlaybackTick"),
                 ("on_tick", "omni.graph.action.OnTick"),
                 ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
                 ("isaac_create_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
@@ -76,6 +77,7 @@ class OmniGraphs:
         {
             og.Controller.Keys.CREATE_NODES: [
                 ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                # ("on_tick", "omni.graph.action.OnPlaybackTick"),
                 ("on_tick", "omni.graph.action.OnTick"),
                 ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
                 ("left_camera_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
@@ -167,6 +169,7 @@ class OmniGraphs:
             {
                 og.Controller.Keys.CREATE_NODES: [
                     ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                    # ("on_tick", "omni.graph.action.OnPlaybackTick"),
                     ("on_tick", "omni.graph.action.OnTick"),
                     ("isaac_run_one_simulation_frame","isaacsim.core.nodes.OgnIsaacRunOneSimulationFrame"),
                     ("isaac_create_render_product","isaacsim.core.nodes.IsaacCreateRenderProduct"),
@@ -207,6 +210,7 @@ class OmniGraphs:
             {
                 og.Controller.Keys.CREATE_NODES: [
                     ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
+                    # ("on_tick", "omni.graph.action.OnPlaybackTick"),
                     ("on_tick", "omni.graph.action.OnTick"),
                     ("ros2_qos_profile", "isaacsim.ros2.bridge.ROS2QoSProfile"),
                     ("isaac_read_simulation_time", "isaacsim.core.nodes.IsaacReadSimulationTime"),
@@ -275,6 +279,7 @@ class OmniGraphs:
                 og.Controller.Keys.CREATE_NODES: [
                     ("ros2_context", "isaacsim.ros2.bridge.ROS2Context"),
                     ("isaac_read_simulation_time", "isaacsim.core.nodes.IsaacReadSimulationTime"),
+                    # ("on_tick", "omni.graph.action.OnPlaybackTick"),
                     ("on_tick", "omni.graph.action.OnTick"),
                     ("ros2_publish_clock", "isaacsim.ros2.bridge.ROS2PublishClock"),
                 ],

@@ -2,7 +2,11 @@
 
 import carb
 from isaacsim import SimulationApp
-sim_app = SimulationApp({"headless": False}) # MUST BE RIGHT AFTER SimulationApp IMPORT
+sim_cfg = {
+    "headless": False,
+}
+sim_app = SimulationApp(launch_config=sim_cfg) # MUST BE RIGHT AFTER SimulationApp IMPORT
+# sim_app = SimulationApp({"headless": False}) # MUST BE RIGHT AFTER SimulationApp IMPORT
 
 import os
 import yaml
@@ -27,7 +31,6 @@ from pegasus.simulator.logic.vehicles.multirotor import Multirotor, MultirotorCo
 from pegasus.simulator.logic.interface.pegasus_interface import PegasusInterface
 from pxr import Gf, UsdLux, Sdf
 
-
 from backend.sensor import StereoCamera, RTXLidar
 from backend.ros2 import ClockPublisher, TfPublisher
 
@@ -51,16 +54,15 @@ class PegasusApp:
     def setup_scene(self):
         self.world.scene.add_default_ground_plane()
         ClockPublisher()
-        # self._spawn_ground_plane(scale=np.array([100, 100, 100]))
-        self._spawn_ground_plane(scale=None)
+        self._spawn_ground_plane(scale=[10.0, 10.0, 10.0])
         self._spawn_light()
-        self._spawn_object(position=np.array([10, 0, 0]), filename="cube.usdc")
-        self._spawn_quadrotor(position=[0,0,0], rotation=[0,0,0], vehicle_id=0)
+        self._spawn_object(position=[10.0, 0.0, 0.0], filename="cube.usdc")
+        self._spawn_quadrotor(position=[0,0,0], rotation=[0,0,0], vehicle_id=0, camera=False, lidar=True)
         
-
     @staticmethod
     def _spawn_ground_plane(scale=None):
-        XFormPrim(prim_paths_expr="/World/defaultGroundPlane", scales=scale)
+        scale = np.array([scale])
+        XFormPrim(prim_paths_expr="/World/defaultGroundPlane", name="GND", scales=scale)
         return
         
     def _spawn_light(self):
@@ -70,24 +72,24 @@ class PegasusApp:
         light.AddTranslateOp().Set(Gf.Vec3d(1000.0, 1000.0, 1000.0))
         return
 
-    def _spawn_object(self, position=np.array([0.0, 0.0, 0.0]), filename="cube.usdc"):
+    def _spawn_object(self, filename="cube.usdc", position=[0.0, 0.0, 0.0], orientation=[45.0, 45.0, 45.0]):
         # file w. filename must be put in data folder and be .usdc 
         data_dir = os.path.join(self.working_dir, "data/")
         object_path = data_dir + filename
         add_reference_to_stage(usd_path=object_path, prim_path="/World/Object")
-        print("hello")
+        position = np.array([position])
+        orientation = np.array([orientation])
+        scale = np.array([[1.0, 1.0, 1.0]])
         XFormPrim(
             prim_paths_expr = "/World/Object",
             name = "CubeObject",
-            # positions=position,
-            # scales=np.array([1.0, 1.0, 1.0]),
-            # scales=None,
-            # orientations=rot_utils.euler_angles_to_quats(np.array([0.0, 0.0, 0.0]), degrees=True),
-            # orientations=None,
+            positions=position,
+            orientations=rot_utils.euler_angles_to_quats(orientation, degrees=True),
+            scales=scale,
         )
         return
     
-    def _spawn_quadrotor(self, position=[0.0,0.0,0.07], rotation=[0.0,0.0,0.0], vehicle_id: int=0, camera: bool=True, lidar: bool=True):
+    def _spawn_quadrotor(self, position=[0.0,0.0,0.07], rotation=[0.0,0.0,0.0], vehicle_id: int=0, camera: bool=False, lidar: bool=False):
         if vehicle_id == 0:
             drone_prim_path = "/World/quadrotor"
         else:
@@ -130,7 +132,7 @@ class PegasusApp:
                 topic_prefix=self.topic_prefix,
                 drone_prim_path=drone_prim_path,
                 vehicle_id=vehicle_id,
-                translation=(0.0,0.0,0.25),
+                translation=(0.0,0.0,0.05),
             )
         
         TfPublisher(self.topic_prefix, drone_prim_path, self.default_body_children) #make tf tree publisher
