@@ -23,6 +23,7 @@ unzip isaac-sim-standalone-5.1.0-linux-x86_64.zip
 
 # Run the post-installation scripts
 ./post_install.sh
+./isaac-sim.selector.sh
 
 # Delete the zip file
 rm isaac-sim-standalone-5.1.0-linux-x86_64.zip
@@ -199,6 +200,7 @@ MicroXRCEAgent udp4 -p 8888
 ## World Configuration
 
 ## Quick Launch
+
 
 
 
