@@ -4,9 +4,11 @@ import carb
 from isaacsim import SimulationApp
 sim_cfg = {
     "headless": False,
+    "multi_gpu": True,
+    "hide_ui": True,
+    # "rendere": "RaytracedLighting",
 }
 sim_app = SimulationApp(launch_config=sim_cfg) # MUST BE RIGHT AFTER SimulationApp IMPORT
-# sim_app = SimulationApp({"headless": False}) # MUST BE RIGHT AFTER SimulationApp IMPORT
 
 import os
 import yaml
@@ -45,6 +47,7 @@ class PegasusApp:
         self.timeline = omni.timeline.get_timeline_interface()
         self.pg = PegasusInterface()
         self.pg._world = World(**self.pg._world_settings)
+        # self.pg.set_world_settings(physics_dt=60, stage_units_in_meters=1.0, rendering_dt=20, device="gpu") # Default is 250, 1, 60, cpu
         self.world = self.pg.world
 
         self.setup_scene()

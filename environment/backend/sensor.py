@@ -77,9 +77,7 @@ class StereoCamera():
         camera.set_stereo_role(stereo_role)
         return camera
 
-        
 class RTXLidar():
-
     def __init__(self, lidar_config, topic_prefix, drone_prim_path, vehicle_id:int=0, translation:tuple=(0.0,0.0,0.0),orientation:tuple=(1.0, 0.0, 0.0, 0.0)):
         self.lidar_config = lidar_config
         self.topic_prefix = topic_prefix
