@@ -23,15 +23,12 @@ unzip isaac-sim-standalone-5.1.0-linux-x86_64.zip
 
 # Run the post-installation scripts
 ./post_install.sh
+
+# Run the sim selector and click start
 ./isaac-sim.selector.sh
 
 # Delete the zip file
 rm isaac-sim-standalone-5.1.0-linux-x86_64.zip
-```
-
-To verify installation run:
-```
-./isaac-sim.sh
 ```
 
 NVIDIA provides IsaacSim with its own Python interpreter. To use PegasusSim usage of the same Python interpreter is required when starting simulations. 
@@ -127,6 +124,8 @@ isaac_run() {
         return 1
     fi
 }
+# Allow running from shell scripts
+export -f isaac_run
 ```
 
 IsaacSim can now be run using the Alias:
@@ -202,6 +201,7 @@ MicroXRCEAgent udp4 -p 8888
 ## Quick Launch
 ```
 ```
+
 
 
 
